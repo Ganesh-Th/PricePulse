@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>PricePal Result</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-repeat: no-repeat;
+            height: 650px;
+    background-image:linear-gradient(yellow,green,blue);
+  
+}
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+        }
+        .box {
+            width: 45%;
+            padding: 20px;
+            border: 1px solid #000000;
+            border-radius: 10px;
+            height:80vh;
+            background-color: aliceblue;
+        }
+        #myChart {
+            border: 4px 4px 4px 4px;
+            background-color: antiquewhite;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="box">
+        <h1>Price Details</h1>
+        <table class="table">
+            <tr>
+                <th>Attribute</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Brand</td>
+                <td>{{ brand }}</td>
+            </tr>
+            <tr>
+                <td>Model</td>
+                <td>{{ model }}</td>
+            </tr>
+            <tr>
+                <td>Color</td>
+                <td>{{ color }}</td>
+            </tr>
+            <tr>
+                <td>Storage</td>
+                <td>{{ storage }}</td>
+            </tr>
+            <tr>
+                <td> Poorvika Price:</td>
+                <td>{{ price }}</td>
+            </tr>
+            <tr>
+                <td>Flipkart Price:</td>
+                <td>{{ flipkart_price }}</td>
+            </tr>
+            <tr>
+                <td>Croma Price:</td>
+                <td>{{ croma_price }}</td>
+            </tr>
+            <tr>
+                <td>Optimal Preference is</td>
+                <td>{{ opt }}</td>
+            </tr>
+        
+
+        </table>
+    </div>
+    <div class="box">
+        <h1>Price Comparison</h1>
+        <canvas id="myChart"></canvas>
+    </div>
+</div>
+
+<script>
+    const labels = {{ labels | tojson}};
+
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Sales',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: {{ data | tojson}},
+        }]
+    };
+
+    const config = {
+        type: 'bar',
+        data: data,
+        options: { maintainAspectRatio: false }
+    };
+
+    const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

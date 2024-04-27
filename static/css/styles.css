@@ -1,0 +1,62 @@
+
+body {
+  background-image: url('bg1.png');
+  background-size:50%;
+  font-family: Arial, sans-serif;
+}
+.container {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: 100vh;
+}
+.container h1 {
+  text-align: center;
+  color: #ffffff; /* Adjust color as needed */
+  margin-bottom: 20px; /* Adjust margin as needed */
+  text-shadow: 2px 2px 4px rgb(0, 0, 0); /* Add shadow for better visibility */
+}
+
+form {
+  background-color: rgb(253, 203, 55); /* Adjust the alpha value (0.6) to control transparency */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 500px;
+  animation: slideIn 0.5s ease;
+}
+
+input[type="text"], select {
+ 
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+input[type="submit"] {
+  background-color: #712b00;
+  color:blue;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #3c0505;
+}
+
+@keyframes slideIn {
+  from {
+      opacity: 0;
+      transform: translateY(-50px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
