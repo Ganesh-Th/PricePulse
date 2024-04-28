@@ -91,13 +91,7 @@ def result():
             break
     return render_template('result.html', brand=brand, model=model, color=color, storage=storage, price=price, flipkart_price=flipkart_price, croma_price=croma_price,data=p,labels=label,opt=opt)
 
-def preprocess_input(brand, model, color, storage):
-    le = LabelEncoder()
-    brand_label = le.fit_transform([brand])[0]
-    model_label = le.fit_transform([model])[0]
-    color_label = le.fit_transform([color])[0]
-    storage_label = le.fit_transform([storage])[0]
-    return pd.DataFrame({'Phone Name': [brand_label], 'Model': [model_label], 'Color': [color_label], 'Storage': [storage_label]})
+
 
 # Route for prediction
 @app.route('/predict', methods=['POST'])
@@ -108,33 +102,37 @@ def predict():
     color = request.form['color'].strip().lower()
     storage = request.form['storage'].strip().lower()
 
-    # Preprocess input data
-    input_data = preprocess_input(brand, model, color, storage)
+    # Make sure input data is not empty
+    if brand and model and color and storage:
     
+            # Convert string inputs to integers using label encoding
+            le=LabelEncoder()
+            brand_label = le.fit([brand])[0]
+            model_label = le.fit([model])[0]
+            color_label = le.fit([color])[0]
+            storage_label = le.fit([storage])[0]
 
-    # Make sure input_data is not empty
-    if not input_data.empty:
-        # Extract features from input_data
-        X_pred = input_data
+            # Create a DataFrame with the encoded values
+            X_pred = pd.DataFrame({
+                'Brand': [brand_label],
+                'Model': [model_label],
+                'Color': [color_label],
+                'Storage': [storage_label]
+            })
 
-        # Perform prediction using the model
-        predicted_price = model.predict(X_pred)
+            # Perform prediction using the model
+            predicted_price = model.predict(X_pred)
 
-        # Render prediction.html with the predicted price
-        return render_template('prediction.html', predicted_price=predicted_price[0])
+            # Render prediction.html with the predicted price
+            return render_template('prediction.html', brand=brand, model=model, color=color, storage=storage, predicted_price=predicted_price[0])
+
+
+
     else:
-        # Handle case where input_data is empty
-        return render_template('error.html', message='No matching phone found')
+        # Handle case where input data is empty
+        return render_template('error.html', message='Please fill out all the fields')
 
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-
-
-
-
-    
